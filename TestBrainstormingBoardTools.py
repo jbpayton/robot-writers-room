@@ -27,7 +27,6 @@ system_prompt_scribe = SystemMessage(
 # Initialize our agents with their respective roles and system prompts
 scribe_agent = DialogueAgentWithTools(name="Scribe", system_message=system_prompt_scribe, model=ChatOpenAI(model_name='gpt-4', streaming=True, callbacks=[StreamingStdOutCallbackHandler()]), tools=scribe_tools)
 
-'''
 scribe_agent.receive("HumanUser", "I have an idea for a novel, about a world where the development of AGI and brain "
                                   "computer uploading leads to the creation of “regional deities” who interface with "
                                   "those who adhere/subscribe to them. The novel “American Goddess” centers on "
@@ -53,7 +52,7 @@ scribe_agent.receive("HumanUser", "I have an idea for a novel, about a world whe
                                   "the USA attempts to replace Sophia with a false one.")
 
 scribe_agent.send()
-'''
+
 scribe_agent.receive("HumanUser", "Now that we have a collection of cards, can you read the contents from all of the "
                                   "cards and generate a detailed, bulleted, and indented story outline useful for "
                                   "writing a novel? Please break down ideas into smaller ideas, and group similar "
