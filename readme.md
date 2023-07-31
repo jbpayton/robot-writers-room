@@ -25,6 +25,8 @@ This repository demonstrates using AI to brainstorm and refine story ideas colla
 
 The `run.py` script orchestrates an end-to-end workflow using multiple AI agents.
 
+![Flow Diagram](FlowDiagram.png?raw=true "Flow Diagram")
+
 ## System Agents
 
 In this project, several AI-powered system agents interact in a well-orchestrated process to aid the human user in brainstorming and refining story ideas. The process flow goes as follows: 
