@@ -142,7 +142,7 @@ The following are required to run the project:
 
 ## Token Usage Warning
 
-Please be aware that this tool often generates large data frames and consequently makes many requests to the OpenAI API. This can use up a lot of tokens and can often exceed token lengths for queries. This makes using the tool quite expensive. Consider this aspect before using the tool extensively. Improvements to manage this more efficiently are planned for future versions.
+Please be aware that this tool often generates long chains of agent based activity and consequently makes many large requests to the OpenAI API. This can use up a lot of tokens. This makes using the tool quite expensive. Consider this aspect before using the tool extensively. Improvements to manage this more efficiently are planned for future versions.
 
 ## Autonomous Agents Disclaimer
 
