@@ -115,7 +115,7 @@ if __name__ == "__main__":
     # Simulate the conversation
     print("Starting brainstorming session, please provide an idea for a novel.")
     num_cycles = ITERATIONS_FOR_BRAINSTORMING
-    '''
+
     for _ in range(num_cycles):
         for _ in range(len(agent_list)):
             speaker, message = simulator.step()
@@ -175,7 +175,7 @@ if __name__ == "__main__":
 
     character_designer.send()
     
-    '''
+
 
     # next we are going to have the character designer use the outline created by the outliner to flesh out the
     # character portion of the outline
