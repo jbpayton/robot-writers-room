@@ -134,11 +134,11 @@ Key points:
 
 The following are required to run the project:
 
-
-
 - Python 3.7 or later
-- OpenAI GPT-3
-- Wikipedia-API
+- langchain~=0.0.245
+- pydantic~=1.10.12
+- duckduckgo-search
+- wikipedia
 
 ## Token Usage Warning
 
@@ -154,7 +154,7 @@ Be sure to thoroughly understand the behavior of these autonomous agents and to 
 
 ## Credits
 
-This project uses [OpenAI's GPT-3](https://beta.openai.com/) for generating ideas, the [Wikipedia-API](https://pypi.org/project/Wikipedia-API/) for extracting relevant information from Wikipedia, and DuckDuckGo's Instant Answer API for internet search results.
+This project uses [OpenAI's GPT-4](https://beta.openai.com/) for generating ideas, the [Wikipedia-API](https://pypi.org/project/Wikipedia-API/) for extracting relevant information from Wikipedia, and DuckDuckGo's Instant Answer API for internet search results.
 
 ## License
 
