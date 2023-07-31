@@ -11,6 +11,7 @@
     - [Outliner](#outliner)
     - [Worldbuilder](#worldbuilder)
     - [Character Designer](#character-designer)
+    - [Chapter Outliner](#chapter-outliner)
 - [Card Tools](#card-tools)
 - [Usage](#usage)
 - [Code Overview](#code-overview)
@@ -58,6 +59,8 @@ The `Character Designer` acts like a seasoned character architect for multiple t
 
 Together, these agents function in harmony to deliver a creative and efficient solution for overcoming writer's block, providing a wealth of ideas for writers to explore.
 
+### Chapter Outliner
+The `Chapter Outliner` acts as a meticulous plot architect. This agent takes the comprehensive and enriched world, plot, and character details from the 'refined_outline.txt' and 'characters.txt' files, and crafts a detailed chapter-by-chapter outline of the novel. Its primary task is to produce a document, 'detailed_chapter_outline.txt', which provides a clear roadmap for the narrative flow of the story, with each chapter sketched out in detail. This includes identifying key plot developments, character interactions, and setting descriptions for each chapter. The Chapter Outliner’s capacity for deep analysis and strategic organization ensures the author is equipped with a precise blueprint for their narrative journey.
 ## Card Tools
 
 The "Card Tools" system is a collection of Python classes that work together to provide an abstraction to manipulate a set of idea 'cards'. Each card carries an idea with attributes such as a unique identifier (id), a name, a category, and a detailed description. The 'cards' are created, updated, and managed by the Scribe and Outliner agents as a means to record and exchange ideas in a topic-based manner, thereby facilitating the smooth transition of ideas from one agent to another.
@@ -90,9 +93,11 @@ As the process unfolds, it yields several key outputs that capture the various s
 
 - **outline.txt**: Crafted by the Outliner agent, this file offers an initial outline of the story based on the ideas collected during the brainstorming session. It includes character listings, locations, and other essential plot elements.
 
-- **stage2_outline.txt**: This file is a more refined version of the initial outline with added depth provided by the Worldbuilder agent. It includes vivid descriptions of locations and objects, offering a comprehensive and intricate backdrop for the narrative.
+- **refined_outline.txt**: This file is a more refined version of the initial outline with added depth provided by the Worldbuilder agent. It includes vivid descriptions of locations and objects, offering a comprehensive and intricate backdrop for the narrative.
 
 - **characters.txt**: Created by the Character Designer agent, this document provides a rich tapestry of character details. It includes physical descriptions, personalities, backstories, motivations, and more for each character, offering a nuanced perspective for narrative construction.
+
+- **detailed_chapter_outline.txt**: This file contains a detailed chapter-by-chapter outline of the story.
 
 These outputs collectively provide a comprehensive suite of resources for the author, offering everything from the initial spark of an idea to fully fleshed out characters and detailed world descriptions. As such, running the `run.py` script not only provides an engaging AI-assisted brainstorming experience but also results in a valuable set of assets to aid in the writing process.
 
@@ -122,7 +127,8 @@ Key points:
 - `prompts.py` - Prompt definitions  
 - `Agents.py` - Dialogue agents
 - `TestStoryBuilderTools.py` - Tests tools
-- `StoryBuilder/tool.py` - Tools for managing ideas 
+- `StoryBuilder/tool.py` - Tools for managing ideas
+- `SampleOutputs/` - Sample Output from the tool when I asked it to write a story about talking animals, fairies, and elves. (I used these files for unit testing.)
 
 ## Requirements
 

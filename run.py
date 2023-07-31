@@ -1,6 +1,6 @@
 from typing import List, Callable
 
-from langchain import WikipediaAPIWrapper
+from langchain import WikipediaAPIWrapper, PromptTemplate
 from langchain.chat_models import ChatOpenAI
 from langchain.schema import (
     SystemMessage,
@@ -14,7 +14,15 @@ from langchain.tools.file_management import WriteFileTool, ReadFileTool
 
 from prompts import CHARACTER_DESIGNER_HUMAN_PROMPT, CHARACTER_DESIGNER_SYSTEM_PROMPT, WORLDBUILDER_HUMAN_PROMPT, \
     WORLDBUILDER_SYSTEM_PROMPT, OUTLINER_HUMAN_PROMPT, OUTLINER_SYSTEM_PROMPT, BRAINSTORMER_SYSTEM_PROMPT, \
-    REFINER_SYSTEM_PROMPT, RESEARCHER_SYSTEM_PROMPT, SCRIBE_SYSTEM_PROMPT
+    REFINER_SYSTEM_PROMPT, RESEARCHER_SYSTEM_PROMPT, SCRIBE_SYSTEM_PROMPT, CHAPTER_OUTLINER_SYSTEM_PROMPT, \
+    CHAPTER_OUTLINER_HUMAN_PROMPT
+
+# Parameters
+ITERATIONS_FOR_BRAINSTORMING = 2
+
+PAGES_PER_CHAPTER = 10
+
+NUM_CHAPTERS = 30
 
 
 class DialogueSimulator:
@@ -75,7 +83,7 @@ if __name__ == "__main__":
 
     # Define the tools for the researcher
     researcher_tools = [DuckDuckGoSearchRun(),
-                        WikipediaQueryRun(api_wrapper=WikipediaAPIWrapper()),WriteFileTool()]
+                        WikipediaQueryRun(api_wrapper=WikipediaAPIWrapper()), WriteFileTool()]
     researcher = DialogueAgentWithTools(name="Researcher",
                                         system_message=system_prompt_researcher,
                                         model=ChatOpenAI(model_name='gpt-4', streaming=True,
@@ -90,9 +98,11 @@ if __name__ == "__main__":
                                     model=ChatOpenAI(model_name='gpt-4', streaming=True,
                                                      callbacks=[StreamingStdOutCallbackHandler()]), tools=scribe_tools)
 
+
     # Define a round-robin selection function
     def round_robin(step: int, agents: List[DialogueAgent]) -> int:
         return step % len(agents)
+
 
     # Initialize the User agent
     user_agent = UserAgent(name="User")
@@ -104,8 +114,8 @@ if __name__ == "__main__":
 
     # Simulate the conversation
     print("Starting brainstorming session, please provide an idea for a novel.")
-    num_cycles = 2
-
+    num_cycles = ITERATIONS_FOR_BRAINSTORMING
+    '''
     for _ in range(num_cycles):
         for _ in range(len(agent_list)):
             speaker, message = simulator.step()
@@ -146,8 +156,7 @@ if __name__ == "__main__":
     world_builder.receive("HumanUser",
                           WORLDBUILDER_HUMAN_PROMPT)
 
-    outline = world_builder.send()
-    print(outline)
+    world_builder.send()
 
     # next we are going to have the character designer use the outline created by the outliner to flesh out the
     # character portion of the outline
@@ -164,5 +173,33 @@ if __name__ == "__main__":
     character_designer.receive("HumanUser",
                                CHARACTER_DESIGNER_HUMAN_PROMPT)
 
-    outline = character_designer.send()
-    print(outline)
+    character_designer.send()
+    
+    '''
+
+    # next we are going to have the character designer use the outline created by the outliner to flesh out the
+    # character portion of the outline
+    system_prompt_chapter_outliner = SystemMessage(
+        role="chapter_outliner",
+        content=CHAPTER_OUTLINER_SYSTEM_PROMPT
+    )
+    chapter_outliner_tools = [ReadFileTool(), WriteFileTool()]
+    chapter_outliner = DialogueAgentWithTools(name="ChapterOutliner",
+                                              system_message=system_prompt_chapter_outliner,
+                                              model=ChatOpenAI(model_name='gpt-4', streaming=True,
+                                                               callbacks=[StreamingStdOutCallbackHandler()]),
+                                              tools=chapter_outliner_tools)
+
+    chapter_outline_request_prompt = PromptTemplate(
+        input_variables=["chapter_count", "page_count"],
+        template=CHAPTER_OUTLINER_HUMAN_PROMPT
+    )
+
+    chapter_count = NUM_CHAPTERS
+    page_count = PAGES_PER_CHAPTER
+    prompt = chapter_outline_request_prompt.format(chapter_count=chapter_count, page_count=page_count)
+
+    chapter_outliner.receive("HumanUser",
+                             prompt)
+
+    chapter_outliner.send()
